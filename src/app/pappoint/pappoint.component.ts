@@ -67,6 +67,10 @@ export class PappointComponent implements OnInit {
   }
 
   secondPackage() {
+    if (this.pappointForm.controls[`Sessions5Appointment`].value !== '') {
+      this.thirdPackage();
+      return;
+    }
     this.totalAmount = 0;
     if (this.pappointForm.controls[`yesP`].value !== '') {
       this.totalAmount += 200;
@@ -82,7 +86,7 @@ export class PappointComponent implements OnInit {
       this.totalAmount += 200;
     }
     let weeks = this.pappointForm.controls[`weeks`].value;
-    this.totalAmount = this.totalAmount + 4 * weeks * 300;
+    this.totalAmount = this.totalAmount + 5 * weeks * 300;
     this.pappointForm.controls[`amount`].setValue(this.totalAmount);
   }
 
