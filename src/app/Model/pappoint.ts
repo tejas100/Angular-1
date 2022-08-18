@@ -14,4 +14,5 @@ export interface appointmentmodel {
   noPreference?: string;
   yesP?: string;
   noP?: string;
+  package?: string;
 }

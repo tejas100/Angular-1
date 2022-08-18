@@ -10,6 +10,8 @@ import { appointmentmodel } from '../Model/pappoint';
 export class PappointComponent implements OnInit {
   pappointForm!: FormGroup;
   appointment!: appointmentmodel;
+  temppackage = '';
+  totalAmount = 0;
 
   constructor(private pappointFormBuilder: FormBuilder) {}
 
@@ -17,8 +19,28 @@ export class PappointComponent implements OnInit {
     this.createForm();
   }
 
+  setPackage() {
+    if (this.pappointForm.controls[`Sessions4Appointment`].value !== '') {
+      console.log('Session 4');
+      this.temppackage =
+        this.pappointForm.controls[`Sessions4Appointment`].value;
+    } else if (this.pappointForm.controls[`oneTimeAppointment`].value !== '') {
+      this.temppackage = this.pappointForm.controls[`oneTimeAppointment`].value;
+    } else if (
+      this.pappointForm.controls[`Sessions5Appointment`].value !== ''
+    ) {
+      this.temppackage =
+        this.pappointForm.controls[`Sessions5Appointment`].value;
+    }
+  }
+
   submitappointment() {
     console.log('Submit method called');
+    this.setPackage();
+    console.log(this.pappointForm.controls[`oneTimeAppointment`].value);
+
+    console.log('temp package ' + this.temppackage);
+    this.setPackage();
     var appoint: appointmentmodel = {
       name: this.pappointForm.controls[`name`].value,
       age: this.pappointForm.controls[`age`].value,
@@ -35,8 +57,44 @@ export class PappointComponent implements OnInit {
       noPreference: this.pappointForm.controls[`noPreference`].value,
       yesP: this.pappointForm.controls[`yesP`].value,
       noP: this.pappointForm.controls[`noP`].value,
+      package: this.temppackage,
     };
-    console.log(appoint.age);
+    console.log(
+      typeof this.pappointForm.controls[`Sessions4Appointment`].value
+    );
+
+    console.log(appoint.package);
+  }
+
+  secondPackage() {
+    this.totalAmount = 0;
+    if (this.pappointForm.controls[`yesP`].value !== '') {
+      this.totalAmount += 200;
+    }
+    let weeks = this.pappointForm.controls[`weeks`].value;
+    this.totalAmount = this.totalAmount + 4 * weeks * 400;
+    this.pappointForm.controls[`amount`].setValue(this.totalAmount);
+  }
+
+  thirdPackage() {
+    this.totalAmount = 0;
+    if (this.pappointForm.controls[`yesP`].value !== '') {
+      this.totalAmount += 200;
+    }
+    let weeks = this.pappointForm.controls[`weeks`].value;
+    this.totalAmount = this.totalAmount + 4 * weeks * 300;
+    this.pappointForm.controls[`amount`].setValue(this.totalAmount);
+  }
+
+  firstPackage() {
+    this.totalAmount = 0;
+    this.pappointForm.controls[`weeks`].disable;
+    this.pappointForm.controls[`weeks`].setValue(1);
+    if (this.pappointForm.controls[`yesP`].value !== '') {
+      this.totalAmount += 200;
+    }
+    this.totalAmount += 500;
+    this.pappointForm.controls[`amount`].setValue(this.totalAmount);
   }
 
   createForm() {
@@ -56,6 +114,11 @@ export class PappointComponent implements OnInit {
       noPreference: [{ value: '', disabled: false }],
       yesP: [{ value: '', disabled: false }],
       noP: [{ value: '', disabled: false }],
+      oneTimeAppointment: [{ value: '', disabled: false }],
+      Sessions4Appointment: [{ value: '', disabled: false }],
+      Sessions5Appointment: [{ value: '', disabled: false }],
+      amount: [{ value: '', disabled: false }],
+      weeks: [{ value: '', disabled: false }],
     });
   }
 }

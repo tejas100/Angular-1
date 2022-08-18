@@ -158,9 +158,10 @@
     <label for="Package">Select a Package</label> <br />
     <input
       type="radio"
-      name="package"
+      name="package-1"
       class="form-control"
       value="One time appointment (Rs. 500/-)"
+      (click)="firstPackage()"
       required
       formControlName="oneTimeAppointment"
     />
@@ -168,21 +169,22 @@
     <br />
     <input
       type="radio"
-      name="package"
+      name="package-2"
       class="form-control"
       value="4 sessions per week (Rs. 400/- per session)"
       required
-      formControlName="4SessionsAppointment"
+      (click)="secondPackage()"
+      formControlName="Sessions4Appointment"
     />
     4 sessions per week (Rs. 400/- per session)
     <br />
     <input
       type="radio"
-      name="package"
+      name="package-3"
       class="form-control"
-      value=" 5 sessions per week (Rs. 300/- per session)"
+      value="5 sessions per week (Rs. 300/- per session)"
       required
-      formControlName="5SessionsAppointment"
+      formControlName="Sessions5Appointment"
     />
     5 sessions per week (Rs. 300/- per session)
   </div>
@@ -194,6 +196,8 @@
       class="form-control"
       placeholder="Weeks"
       required
+      formControlName="weeks"
+      (keyup)="secondPackage()"
     />
   </div>
 
@@ -204,6 +208,7 @@
       class="form-control"
       placeholder="Ammount"
       required
+      formControlName="amount"
     />
     &nbsp; &nbsp;
 
